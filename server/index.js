@@ -1,6 +1,16 @@
 'use strict'
 
 var Twit = require('twit')
+var express = require('express')
+var app = express()
+
+app.set('view engine', 'ejs')
+app.set('views', 'view')
+app.use(express.static('static'))
+app.listen(8000)
+
+app.get('/', index)
+app.get('/tweetReach.ejs', tweetReach)
 
 var T = new Twit({
     consumer_key: '9KrBvLfH3PNIsMJGJFsGNWilI',
@@ -9,16 +19,38 @@ var T = new Twit({
     access_token_secret: 'Q85VB75V2aTye1scoeXwxjT5JheRq1ouinB0ktgvvltTJ'
 })
 
-T.get('statuses/retweets/998595495303008258', retweets)
+function index(req, res) { // This is the index, one of the two pages you can see without logging in or registering
+    var result = {
+        data: undefined
+    }
+    res.render('index.ejs', Object.assign({}, result))
+}
 
-function retweets(err, data) {
-    var followers = []
-    data.forEach(function (data) {
-        followers.push(data.user.followers_count)
-        //        console.log(data.user.followers_count)
-    })
-    console.log(followers)
-    console.log(followers.reduce(function (acc, val) {
-        return acc + val
-    }))
+function tweetReach(req, res) {
+    T.get('statuses/retweets/998595495303008258', retweets)
+
+    function retweets(err, data) {
+        if (err) {
+            console.log(err)
+        } else {
+            var followers = []
+            data.forEach(function (data) {
+                followers.push(data.user.followers_count)
+                //        console.log(data.user.followers_count)
+            })
+
+            console.log(followers)
+
+            var reach = followers.reduce(function (acc, val) {
+                return acc + val
+            })
+
+            console.log(reach)
+
+            var result = {
+                data: reach
+            }
+            res.render('tweetReach.ejs', Object.assign({}, result))
+        }
+    }
 }
