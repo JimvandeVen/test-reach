@@ -7,15 +7,17 @@
     <link rel="stylesheet" href="/main.css">
     <title>TweetReach</title>
 </head>
-
 <body>
     <header>
-            <h1>TweetReach</h1>
+        <h1>TweetReach</h1>
     </header>
     <main>
-        <h2>Get the TweetReach <a href="tweetReach.ejs">here!</a></h2>
-        
-          <% if (data){ %> <h3><%= data %></h3> <% } %>
+        <h2>Get the TweetReach here!</h2>
+        <% if (data){ %> <h3><%= data %></h3> <% } %>
+        <form action="/tweetReach" method="POST">
+            <label for="tweetId">Tweet id</label>
+            <input name="tweetId" required id="tweetId">
+            <input type="submit" value="Tweet Reach">
+        </form>
     </main>
-    <script src="/java.js"></script>
 </body>

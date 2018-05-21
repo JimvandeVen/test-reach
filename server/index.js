@@ -3,14 +3,19 @@
 var Twit = require('twit')
 var express = require('express')
 var app = express()
+var bodyParser = require('body-parser')
 
 app.set('view engine', 'ejs')
 app.set('views', 'view')
 app.use(express.static('static'))
+app.use(bodyParser.urlencoded({
+    extended: true
+}))
+app.use(bodyParser.json())
 app.listen(8000)
 
 app.get('/', index)
-app.get('/tweetReach.ejs', tweetReach)
+app.post('/tweetReach', tweetReach)
 
 var T = new Twit({
     consumer_key: '9KrBvLfH3PNIsMJGJFsGNWilI',
@@ -27,7 +32,9 @@ function index(req, res) { // This is the index, one of the two pages you can se
 }
 
 function tweetReach(req, res) {
-    T.get('statuses/retweets/998595495303008258', retweets)
+    console.log(req.body.tweetId)
+    var tweetId = req.body.tweetId
+    T.get('statuses/retweets/:id', {id: tweetId}, retweets)
 
     function retweets(err, data) {
         if (err) {
@@ -50,7 +57,7 @@ function tweetReach(req, res) {
             var result = {
                 data: reach
             }
-            res.render('tweetReach.ejs', Object.assign({}, result))
+            res.render('index.ejs', Object.assign({}, result))
         }
     }
 }
