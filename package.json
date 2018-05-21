@@ -1,0 +1,19 @@
+{
+    "name": "testreach",
+    "version": "1.0.0",
+    "description": "Calculating reach of tweets",
+    "main": "index.js",
+    "scripts": {
+        "start": "node server",
+        "watch": "nodemon server"
+    },
+    "author": "Jim van de Ven",
+    "license": "ISC",
+    "devDependencies": {
+        "nodemon": "^1.17.2"
+    },
+    "dependencies": {
+        "express": "^4.16.3",
+        "twit": "^2.2.9"
+    }
+}
