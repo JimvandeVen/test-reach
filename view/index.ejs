@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/main.css">
     <title>TweetReach</title>
 </head>
 <body>
@@ -12,12 +11,12 @@
         <h1>TweetReach</h1>
     </header>
     <main>
-        <h2>Get the TweetReach here!</h2>
-        <% if (data){ %> <h3><%= data %></h3> <% } %>
+        <h2>Get the TweetReach here.</h2>
         <form action="/tweetReach" method="POST">
             <label for="tweetId">Tweet id</label>
             <input name="tweetId" required id="tweetId">
             <input type="submit" value="Tweet Reach">
         </form>
+        <% if (data){ %> <h3>Your tweet reached <%= data %> people!</h3> <% } %>
     </main>
 </body>

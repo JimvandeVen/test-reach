@@ -28,7 +28,7 @@ function index(req, res) { // This is the index, one of the two pages you can se
     var result = {
         data: undefined
     }
-    res.render('index.ejs', Object.assign({}, result))
+    res.status(200).render('index.ejs', Object.assign({}, result))
 }
 
 function tweetReach(req, res) {
